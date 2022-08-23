@@ -1,0 +1,11 @@
+entity.pantheon_next.add_form:
+  route_name: entity.pantheon_next.add_form
+  title: "New Site"
+  appears_on:
+    - entity.pantheon_next.collection
+  options:
+    attributes:
+      class:
+        - 'use-ajax'
+      data-dialog-type: 'modal'
+      data-dialog-options: '{"width":"600"}'

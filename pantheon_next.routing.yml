@@ -1,0 +1,11 @@
+pantheon_next.environment:
+  path: '/admin/config/services/pantheon-next/{pantheon_next}/evn'
+  defaults:
+    _entity_form: pantheon_next.environment
+    _title: 'Environment Variables'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    parameters:
+      pantheon_next:
+        type: entity:pantheon_next

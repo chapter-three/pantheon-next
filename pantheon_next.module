@@ -1,0 +1,19 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+
+function pantheon_next_entity_delete(EntityInterface $entity) {
+  $storage = \Drupal::entityTypeManager()->getStorage('pantheon_next');
+  if ($entity->getEntityTypeId() == 'next_site') {
+    $entities = $storage->loadByProperties(['next_site' =>  $entity->id()]);
+    foreach ($entities as $entity) {
+      $entity->delete();
+    }
+  }
+  if ($entity->getEntityTypeId() == 'consumer') {
+    $entities = $storage->loadByProperties(['consumer' => $entity->id()]);
+    foreach ($entities as $entity) {
+      $entity->delete();
+    }
+  }
+}
