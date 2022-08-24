@@ -70,7 +70,7 @@ class PantheonNextEnvForm extends ContentEntityForm {
     ];
     $form['confirm'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Invalidate previevious Prevew Secret and Client Secret.'),
+      '#title' => $this->t('Invalidate previevious Preview Secret and Client Secret.'),
       '#required' => TRUE,
     ];
     $form['actions']['submit']['#value'] = $this->t('Generate New Secret');
