@@ -1,6 +1,6 @@
 entity.pantheon_next.add_form:
   route_name: entity.pantheon_next.add_form
-  title: "New Site"
+  title: "New Next.js Site"
   appears_on:
     - entity.pantheon_next.collection
   options:

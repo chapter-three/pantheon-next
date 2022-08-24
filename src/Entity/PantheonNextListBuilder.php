@@ -20,6 +20,7 @@ class PantheonNextListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['site'] = $this->t('Next.js Site');
+    $header['base_url'] = $this->t('Base URL');
     $header['consumer'] = $this->t('Consumer');
     return $header + parent::buildHeader();
   }
@@ -28,8 +29,16 @@ class PantheonNextListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    $row['site'] = $entity->getNextSite()->toLink($entity->getNextSite()->label(), 'edit-form');
-    $row['consumer'] = $entity->getConsumer()->toLink($entity->getConsumer()->label(), 'edit-form');
+    $options = [
+      'attributes' => [
+        'class' => ['use-ajax'],
+        'data-dialog-type' => 'modal',
+        'data-dialog-options' => Json::encode(['width' => 600]),
+      ]
+    ];
+    $row['site'] = $entity->getNextSite()->toLink($entity->getNextSite()->label(), 'edit-form', $options);
+    $row['base_url'] = $entity->getNextSite()->getBaseUrl();
+    $row['consumer'] = $entity->getConsumer()->toLink($entity->getConsumer()->label(), 'edit-form', $options);
     return $row + parent::buildRow($entity);
   }
 
