@@ -34,13 +34,13 @@ class PantheonNextCommands extends DrushCommands {
    *
    * @param string $label
    *   Example: Blog or Marketing site.
-   * @command pantheon-nextjs:new
-   * @aliases pantheon-nextjs
+   * @command pantheon-next:new
+   * @aliases pantheon-next
    * @option preview_url
    *   Provide the preview URL. Example: https://example.com/api/preview.
    * @option base_url
    *   Enter the base URL for the Next.js site. Example: https://example.com.
-   * @usage pantheon-nextjs:new "Pantheon Next.js Site" --preview_url="https://example.com/api/preview" --base_url="https://example.com"
+   * @usage pantheon-next:new "Pantheon Next.js Site" --preview_url="https://example.com/api/preview" --base_url="https://example.com"
    */
   public function newSite($label = 'Pantheon Next.js Site', $options = ['preview_url' => 'https://example.com/api/preview', 'base_url' => 'https://example.com']) {
     $user = $this->pantheonNextInstaller->createUserAndRole();
