@@ -2,6 +2,9 @@
 
 use Drupal\Core\Entity\EntityInterface;
 
+/**
+ * Implements hook_entity_delete().
+ */
 function pantheon_next_entity_delete(EntityInterface $entity) {
   $storage = \Drupal::entityTypeManager()->getStorage('pantheon_next');
   if ($entity->getEntityTypeId() == 'next_site') {
@@ -15,5 +18,17 @@ function pantheon_next_entity_delete(EntityInterface $entity) {
     foreach ($entities as $entity) {
       $entity->delete();
     }
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function pantheon_next_entity_insert(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() == 'next_site') {
+    $pantheon_next = \Drupal::entityTypeManager()->getStorage('pantheon_next')->create([
+      'next_site' =>  $entity->id()
+    ]);
+    $pantheon_next->save();
   }
 }

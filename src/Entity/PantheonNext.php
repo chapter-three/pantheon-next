@@ -112,8 +112,10 @@ class PantheonNext extends ContentEntityBase implements PantheonNextInterface {
    * Get Next.js site referenced entity.
    */
   public function getNextSite() {
-    if ($entity = $this->get('next_site')->first()->get('entity')->getTarget()) {
-      return $entity->getValue();
+    if (!$this->get('next_site')->isEmpty()) {
+      if ($entity = $this->get('next_site')->first()->get('entity')->getTarget()) {
+        return $entity->getValue();
+      }
     }
   }
 
@@ -121,8 +123,10 @@ class PantheonNext extends ContentEntityBase implements PantheonNextInterface {
    * Get Consumer referenced entity.
    */
   public function getConsumer() {
-    if ($entity = $this->get('consumer')->first()->get('entity')->getTarget()) {
-      return $entity->getValue();
+    if (!$this->get('consumer')->isEmpty()) {
+      if ($entity = $this->get('consumer')->first()->get('entity')->getTarget()) {
+        return $entity->getValue();
+      }
     }
   }
 

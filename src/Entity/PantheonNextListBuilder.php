@@ -39,7 +39,7 @@ class PantheonNextListBuilder extends EntityListBuilder {
     ];
     $row['site'] = $entity->getNextSite()->toLink($entity->getNextSite()->label(), 'edit-form', $options);
     $row['base_url'] = $entity->getNextSite()->getBaseUrl();
-    $row['consumer'] = $entity->getConsumer()->toLink($entity->getConsumer()->label(), 'edit-form', $options);
+    $row['consumer'] = ($consumer = $entity->getConsumer()) ? $consumer->toLink($consumer->label(), 'edit-form', $options) : $this->t('Error: Not specified');
     return $row + parent::buildRow($entity);
   }
 
