@@ -40,7 +40,7 @@ class PantheonNextCommands extends DrushCommands {
    *   Provide the preview URL. Example: https://example.com/api/preview.
    * @option base_url
    *   Enter the base URL for the Next.js site. Example: https://example.com.
-   * @usage pantheon_next:new-site "Pantheon Next.js Site" --preview_url="" --base_url=""
+   * @usage pantheon_next:new-site "Pantheon Next.js Site" --preview_url="https://example.com/api/preview" --base_url="https://example.com"
    */
   public function newSite($label = 'Pantheon Next.js Site', $options = ['preview_url' => 'https://example.com/api/preview', 'base_url' => 'https://example.com']) {
     $user = $this->pantheonNextInstaller->createUserAndRole();
