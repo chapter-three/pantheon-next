@@ -48,6 +48,7 @@ use Drupal\user\UserInterface;
  *     "delete-form" = "/admin/config/services/pantheon-next/{pantheon_next}/delete",
  *     "edit-form" = "/admin/config/services/pantheon-next/{pantheon_next}/edit",
  *     "add-form" = "/admin/config/services/pantheon-next/new",
+ *     "environment" = "/admin/config/services/pantheon-next/{pantheon_next}/environment",
  *   }
  * )
  */
