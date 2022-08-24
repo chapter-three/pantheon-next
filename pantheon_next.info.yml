@@ -1,6 +1,7 @@
 name: Pantheon Next.js
 description: Provides functionality for Decoupled sites using  Next.js
 package: Pantheon
+configure: entity.pantheon_next.collection
 type: module
 core_version_requirement: ^9 || ^10
 dependencies:
