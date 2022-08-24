@@ -45,7 +45,7 @@ class PantheonNextListBuilder extends EntityListBuilder {
     ];
     if ($entity->access('update')) {
       $operations['environment'] = [
-        'title' => $this->t('Generate Keys'),
+        'title' => $this->t('Generate Secret'),
         'url' => $this->ensureDestination(URL::fromRoute('pantheon_next.environment', ['pantheon_next' => $entity->id()])),
         'attributes' => $ajax_attributes,
       ];
