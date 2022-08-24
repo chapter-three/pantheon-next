@@ -38,13 +38,12 @@ class PantheonNextEnvForm extends ContentEntityForm {
       'DRUPAL_FRONT_PAGE' => \Drupal::config('system.site')->get('page.front'),
     ];
 
-    if ($secret = $entity->getNextSite()->getPreviewSecret()) {
-      $variables += [
-        'DRUPAL_PREVIEW_SECRET' => '<span id="drupal-preview-secret">' . $secret . '</span>',
-        'DRUPAL_CLIENT_ID' => $entity->getConsumer()->uuid(),
-        'DRUPAL_CLIENT_SECRET' => '<span id="drupal-client-secret">**************</span>',
-      ];
-    }
+    $secret = $entity->getNextSite()->getPreviewSecret();
+    $variables += [
+      'DRUPAL_PREVIEW_SECRET' => '<span id="drupal-preview-secret">' . $secret . '</span>',
+      'DRUPAL_CLIENT_ID' => $entity->getConsumer()->uuid(),
+      'DRUPAL_CLIENT_SECRET' => '<span id="drupal-client-secret">**************</span>',
+    ];
 
     $form['container'] = [
       '#title' => $this->t('Environment variables'),

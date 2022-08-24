@@ -53,11 +53,15 @@ class PantheonNextListBuilder extends EntityListBuilder {
       'data-dialog-type' => 'modal',
       'data-dialog-options' => Json::encode(['width' => 600]),
     ];
-    $operations['environment'] = [
-      'title' => $this->t('Generate Secret'),
-      'url' => $this->ensureDestination($entity->toUrl('environment')),
-      'attributes' => $ajax_attributes,
-    ];
+
+    // We can only generate secrets if Consumer is specified.
+    if ($entity->getConsumer()) {
+      $operations['environment'] = [
+        'title' => $this->t('Generate Secret'),
+        'url' => $this->ensureDestination($entity->toUrl('environment')),
+        'attributes' => $ajax_attributes,
+      ];
+    }
     if (!empty($operations['edit'])) {
       $operations['edit']['attributes'] = $ajax_attributes;
     }
