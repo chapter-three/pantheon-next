@@ -145,26 +145,7 @@ class NextInstaller {
       $next_site->save();
     }
 
-    $sites = [];
-    $site_entities = $site_storage->loadMultiple();
-    foreach ($site_entities as $site) {
-      $sites[$site->id()] = $site->id();
-    }
-
-    if ($types = $this->entityTypeManager->getStorage('node_type')->loadMultiple()) {
-      foreach ($types as $type) {
-        $next_entity_type = $this->entityTypeManager->getStorage('next_entity_type_config');
-        if (empty($next_entity_type->load("node.{$type->id()}"))) {
-          $next_entity_type->create([
-            'id' => "node.{$type->id()}",
-            'site_resolver' => 'site_selector',
-            'configuration' => [
-              'sites' => $sites,
-            ],
-          ])->save();
-        }
-      }
-    }
+    $this->setSiteResolver();
     return $next_site;
   }
 
@@ -251,8 +232,10 @@ class NextInstaller {
    * Create new Pantheon Next.js site entity.
    */
   public function createSiteAndConsumer($user, $label = 'Pantheon Next.js Site', $preview_url = 'https://example.com/api/preview/', $base_url = 'https://example.com') {
+    $label = preg_replace("#[[:punct:]]#", "", $label);
     $consumer = $this->createClientScopes($user, $label);
     $next_site = $this->createNextSite($label, $preview_url, $base_url);
+    $this->setSiteResolver();
     $pantheon_next = $this->entityTypeManager->getStorage('pantheon_next')->create([
       'next_site' => $next_site->id(),
       'consumer' => $consumer->id()
@@ -260,7 +243,38 @@ class NextInstaller {
     $pantheon_next->save();
     return $pantheon_next;
   }
- 
+
+  /**
+   * Set NextJS Site resolver configuration.
+   */
+  protected function setSiteResolver() {
+    $sites = [];
+    $site_storage = $this->entityTypeManager->getStorage('next_site');
+    $site_entities = $site_storage->loadMultiple();
+    foreach ($site_entities as $site) {
+      $sites[$site->id()] = $site->id();
+    }
+
+    if ($types = $this->entityTypeManager->getStorage('node_type')->loadMultiple()) {
+      foreach ($types as $type) {
+        $next_entity_type = $this->entityTypeManager->getStorage('next_entity_type_config');
+        if ($existing = $next_entity_type->load("node.{$type->id()}")) {
+          $existing->setConfiguration(['sites' => $sites]);
+          $existing->save();
+        }
+        else {
+          $next_entity_type->create([
+            'id' => "node.{$type->id()}",
+            'site_resolver' => 'site_selector',
+            'configuration' => [
+              'sites' => $sites,
+            ],
+          ])->save();
+        }
+      }
+    }
+  }
+
   /**
    * Generates a machine name from a string.
    */
