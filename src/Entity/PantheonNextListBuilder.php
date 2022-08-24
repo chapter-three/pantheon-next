@@ -34,7 +34,8 @@ class PantheonNextListBuilder extends EntityListBuilder {
         'class' => ['use-ajax'],
         'data-dialog-type' => 'modal',
         'data-dialog-options' => Json::encode(['width' => 600]),
-      ]
+      ],
+      'query' => \Drupal::destination()->getAsArray(),
     ];
     $row['site'] = $entity->getNextSite()->toLink($entity->getNextSite()->label(), 'edit-form', $options);
     $row['base_url'] = $entity->getNextSite()->getBaseUrl();
