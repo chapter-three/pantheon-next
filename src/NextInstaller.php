@@ -235,7 +235,7 @@ class NextInstaller {
     $consumer_entities = $consumer_storage->loadByProperties(['label' => $label]);
     if (!$consumer = reset($consumer_entities)) {
       $consumer = $consumer_storage->create([]);
-      $consumer->set('label', $label);
+      $consumer->set('label', $label . ' Consumer');
       $consumer->set('secret', $this->defaultPasswordGenerator->generate(21));
       $consumer->set('is_default', TRUE);
       $consumer->set('redirect', '');
