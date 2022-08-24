@@ -40,7 +40,7 @@ class PantheonNextEnvForm extends ContentEntityForm {
 
     if ($secret = $entity->getNextSite()->getPreviewSecret()) {
       $variables += [
-        'DRUPAL_PREVIEW_SECRET' => '<span id="drupal-preview-secret">**************</span>',
+        'DRUPAL_PREVIEW_SECRET' => '<span id="drupal-preview-secret">' . $secret . '</span>',
         'DRUPAL_CLIENT_ID' => $entity->getConsumer()->uuid(),
         'DRUPAL_CLIENT_SECRET' => '<span id="drupal-client-secret">**************</span>',
       ];
