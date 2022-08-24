@@ -76,7 +76,7 @@ class NextInstaller {
     $this->createPathPatterns();
     $user = $this->createUserAndRole();
     $this->createOauthKeys();
-    $this->createSiteAndConsumer($user, 'Pantheon Next.js Site', '/api/preview/', '');
+    $this->createSiteAndConsumer($user, 'Pantheon Next.js Site', 'https://example.com/api/preview/', 'https://example.com');
   }
 
   /**
@@ -233,11 +233,12 @@ class NextInstaller {
   public function createClientScopes($user, $label = 'Pantheon Next.js') {
     $consumer_storage = $this->entityTypeManager->getStorage('consumer');
     $consumer_entities = $consumer_storage->loadByProperties(['label' => $label]);
+    $all_consumer_entities = $consumer_storage->loadMultiple();
     if (!$consumer = reset($consumer_entities)) {
       $consumer = $consumer_storage->create([]);
       $consumer->set('label', $label . ' Consumer');
       $consumer->set('secret', $this->defaultPasswordGenerator->generate(21));
-      $consumer->set('is_default', TRUE);
+      $consumer->set('is_default', empty($all_consumer_entities) ?? TRUE);
       $consumer->set('redirect', '');
       $consumer->set('roles', 'next_site');
       $consumer->set('user_id', $user->id());
@@ -249,7 +250,7 @@ class NextInstaller {
   /**
    * Create new Pantheon Next.js site entity.
    */
-  public function createSiteAndConsumer($user, $label = 'Pantheon Next.js Site', $preview_url = '/api/preview/', $base_url = '') {
+  public function createSiteAndConsumer($user, $label = 'Pantheon Next.js Site', $preview_url = 'https://example.com/api/preview/', $base_url = 'https://example.com') {
     $consumer = $this->createClientScopes($user, $label);
     $next_site = $this->createNextSite($label, $preview_url, $base_url);
     $pantheon_next = $this->entityTypeManager->getStorage('pantheon_next')->create([
@@ -257,6 +258,7 @@ class NextInstaller {
       'consumer' => $consumer->id()
     ]);
     $pantheon_next->save();
+    return $pantheon_next;
   }
  
   /**

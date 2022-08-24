@@ -1,0 +1,6 @@
+services:
+  pantheon_next.commands:
+    class: \Drupal\pantheon_next\Commands\PantheonNextCommands
+    arguments: ['@pantheon_next.installer']
+    tags:
+      - { name: drush.command }
