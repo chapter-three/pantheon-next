@@ -34,8 +34,6 @@ class PantheonNextEnvForm extends ContentEntityForm {
     $variables = [
       'NEXT_PUBLIC_DRUPAL_BASE_URL' => $request->getSchemeAndHttpHost(),
       'NEXT_IMAGE_DOMAIN' => $request->getHost(),
-      'DRUPAL_SITE_ID' => $entity->getNextSite()->id(),
-      'DRUPAL_FRONT_PAGE' => \Drupal::config('system.site')->get('page.front'),
     ];
 
     $secret = $entity->getNextSite()->getPreviewSecret();
@@ -69,8 +67,9 @@ class PantheonNextEnvForm extends ContentEntityForm {
     ];
     $form['confirm'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Invalidate previevious Preview Secret and Client Secret.'),
-      '#required' => TRUE,
+      '#default_value' => TRUE,
+      '#title' => $this->t('Invalidate the current preview and client secrets'),
+      //'#required' => TRUE,
     ];
     $form['actions']['submit']['#value'] = $this->t('Generate New Secret');
     $form['actions']['submit']['#ajax'] = [

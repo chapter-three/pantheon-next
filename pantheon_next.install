@@ -4,5 +4,5 @@
  * Implements hook_install().
  */
 function pantheon_next_install() {
-  \Drupal::service('pantheon_next.installer')->run();
+  //\Drupal::service('pantheon_next.installer')->run();
 }

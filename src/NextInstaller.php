@@ -76,7 +76,7 @@ class NextInstaller {
     $this->createPathPatterns();
     $user = $this->createUserAndRole();
     $this->createOauthKeys();
-    $this->createSiteAndConsumer($user, 'Pantheon Next.js Site', 'https://example.com/api/preview/', 'https://example.com');
+    $this->createSiteAndConsumer($user, 'Next.js Site', 'http://localhost:3000/api/preview/', 'http://localhost:3000');
   }
 
   /**
@@ -86,7 +86,11 @@ class NextInstaller {
     $patterns = [
       'article' => [
         'label' => 'Article',
-        'pattern' => '/blog/[node:title]',
+        'pattern' => '/articles/[node:title]',
+      ],
+      'recipes' => [
+        'label' => 'Recipe',
+        'pattern' => '/recipes/[node:title]',
       ],
       'page' => [
         'label' => 'Page',
@@ -131,7 +135,7 @@ class NextInstaller {
   /**
    * Configure default content type path aliases.
    */
-  public function createNextSite($label = 'Pantheon Next.js Site', $preview_url = '/api/preview/', $base_url = '') {
+  public function createNextSite($label = 'Next.js Site', $preview_url = '/api/preview/', $base_url = '') {
     $site_id = $this->getMachineName($label);
     $site_storage = $this->entityTypeManager->getStorage('next_site');
     if (!$next_site = $site_storage->load($site_id)) {
@@ -156,10 +160,16 @@ class NextInstaller {
     $role_id = 'next_site';
     $role_storage = $this->entityTypeManager->getStorage('user_role');
     if (!$role = $role_storage->load($role_id)) {
+      /** @var \Drupal\user\RoleInterface $role */
       $role = $role_storage->create([
         'id' => $role_id,
-        'label' => 'Next site',
+        'label' => 'Next.js Site',
       ]);
+
+      $role->grantPermission('bypass node access');
+      $role->grantPermission('issue subrequests');
+      $role->grantPermission('access user profiles');
+
       $role->save();
     }
 
@@ -231,7 +241,7 @@ class NextInstaller {
   /**
    * Create new Pantheon Next.js site entity.
    */
-  public function createSiteAndConsumer($user, $label = 'Pantheon Next.js Site', $preview_url = 'https://example.com/api/preview/', $base_url = 'https://example.com') {
+  public function createSiteAndConsumer($user, $label = 'Pantheon Next.js Site', $preview_url = 'http://localhost:3000/api/preview/', $base_url = 'http://localhost:3000') {
     $label = preg_replace("#[[:punct:]]#", "", $label);
     $consumer = $this->createClientScopes($user, $label);
     $next_site = $this->createNextSite($label, $preview_url, $base_url);

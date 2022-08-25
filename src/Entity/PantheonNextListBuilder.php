@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Component\Serialization\Json;
+use Drupal\pantheon_next\Form\PantheonNextInstallerForm;
 
 /**
  * Defines a base class to build a listing entities.
@@ -41,6 +42,21 @@ class PantheonNextListBuilder extends EntityListBuilder {
     $row['base_url'] = $entity->getNextSite()->getBaseUrl();
     $row['consumer'] = ($consumer = $entity->getConsumer()) ? $consumer->toLink($consumer->label(), 'edit-form', $options) : $this->t('Error: Not specified');
     return $row + parent::buildRow($entity);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function render() {
+    $build = parent::render();
+
+    if (count($build['table']['#rows'])) {
+      return $build;
+    }
+
+    // Replace the list with a wizard.
+    // TODO: Inject this.
+    return \Drupal::formBuilder()->getForm(PantheonNextInstallerForm::class);
   }
 
   /**

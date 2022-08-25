@@ -1,5 +1,5 @@
 entity.pantheon_next.collection:
-  title: "Pantheon Next.js"
-  description: "Configure Next.js sites and entity types preview."
-  parent: system.admin_config_services
+  title: "Pantheon"
+  description: "Configure Next.js sites for Pantheon Decoupled."
+  parent: next.next_site.collection
   route_name: entity.pantheon_next.collection

@@ -1,6 +1,6 @@
-name: Pantheon Next.js
-description: Provides functionality for Decoupled sites using  Next.js
-package: Pantheon
+name: Next.js for Pantheon
+description: Provides functionality for developing decoupled Drupal + Next.js sites on Pantheon.
+package: Web services
 configure: entity.pantheon_next.collection
 type: module
 core_version_requirement: ^9 || ^10
