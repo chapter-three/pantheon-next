@@ -1,5 +1,5 @@
 {
-  "name": "chapter-three/pantheon-next",
+  "name": "chapter-three/pantheon_next",
   "description": "This module provides a starting point for developing a decoupled Drupal + Next.js site on Pantheon.",
   "type": "drupal-module",
   "homepage": "https://drupal.org/project/pantheon_next",
