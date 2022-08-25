@@ -40,7 +40,7 @@ class PantheonNextInstallerForm extends FormBase {
     $installer->run();
 
     // Set the default theme to gin.
-    \Drupal::configFactory()->getEditable('system.theme')->set('default', 'gin')->save();
+    \Drupal::configFactory()->getEditable('system.theme')->set('default', 'claro')->save();
 
     \Drupal::messenger()->addStatus($this->t('You have successfully created your first Next.js site.'));
   }
