@@ -20,3 +20,22 @@ function pantheon_next_entity_delete(EntityInterface $entity) {
     }
   }
 }
+
+/**
+ * Implements hook_entity_insert().
+ */
+function pantheon_next_entity_insert(EntityInterface $entity) {
+  // We only need to create Pantheon Next site only when Next Site created in the UI.
+  // By doing this we are avoiding duplicate Pantheon Next entity creation when 
+  // initiating installation via Drush command.
+  if ($entity->getEntityTypeId() == 'next_site' && PHP_SAPI != 'cli') {
+    $storage = \Drupal::entityTypeManager()->getStorage('pantheon_next');
+    $next_sites = $storage->loadByProperties(['next_site' => $entity->id()]);
+    if (!$site = reset($next_sites)) {
+      $pantheon_next = $storage->create([
+        'next_site' =>  $entity->id()
+      ]);
+      $pantheon_next->save();
+    }
+  }
+}
