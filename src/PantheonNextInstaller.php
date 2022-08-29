@@ -2,6 +2,7 @@
 
 namespace Drupal\pantheon_next;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -52,6 +53,13 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
   protected $fileSystem;
 
   /**
+   * The uuid service.
+   *
+   * @var \Drupal\Component\Uuid\UuidInterface
+   */
+  protected UuidInterface $uuid;
+
+  /**
    * Constructs the NextInstaller service.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -64,13 +72,16 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
    *   Allows us to programmatically generate public and private oauth keys.
    * @param \Drupal\Core\File\FileSystemInterface $file_system
    *   The file system service.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid
+   *   The Uuid service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, DefaultPasswordGenerator $password_generator, KeyGeneratorService $key_generator_service, FileSystemInterface $file_system) {
+  public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, DefaultPasswordGenerator $password_generator, KeyGeneratorService $key_generator_service, FileSystemInterface $file_system, UuidInterface $uuid) {
     $this->configFactory = $config_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->defaultPasswordGenerator = $password_generator;
     $this->keyGeneratorService = $key_generator_service;
     $this->fileSystem = $file_system;
+    $this->uuid = $uuid;
   }
 
   /**
@@ -179,7 +190,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
     }
 
     // TODO: Make this configurable.
-    $email = 'no-reply@example.com';
+    $email = $this->uuid->generate() . "@" . $this->uuid->generate() . ".com";
     $user_storage = $this->entityTypeManager->getStorage('user');
 
     $users = $user_storage->loadByProperties(['mail' => $email]);

@@ -73,6 +73,7 @@ class PantheonNextInstallerForm extends FormBase {
     $this->pantheonNextInstaller->run();
     $this->messenger()
       ->addStatus($this->t('You have successfully created your first Next.js site.'));
+    $this->messenger->addWarning($this->t('Remember to update the email address for the newly created Next.js user.'));
   }
 
 }
