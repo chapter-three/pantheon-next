@@ -56,7 +56,7 @@ class PantheonNextEnvForm extends ContentEntityForm {
         '#context' => [
           'name' => $name,
           'value' => $value,
-        ]
+        ],
       ];
     }
 
@@ -69,12 +69,11 @@ class PantheonNextEnvForm extends ContentEntityForm {
       '#type' => 'checkbox',
       '#default_value' => TRUE,
       '#title' => $this->t('Invalidate the current preview and client secrets'),
-      //'#required' => TRUE,
     ];
     $form['actions']['submit']['#value'] = $this->t('Generate New Secret');
     $form['actions']['submit']['#ajax'] = [
       'callback' => [$this, 'generateSecret'],
-      'wrapper'  => 'product-container',
+      'wrapper' => 'product-container',
     ];
     $form['actions']['cancel'] = [
       '#type' => 'link',

@@ -9,8 +9,6 @@ interface PantheonNextInstallerInterface {
 
   /**
    * Runs installer tasks.
-   *
-   * @return void
    */
   public function run();
 

@@ -1,8 +1,14 @@
 <?php
 
 /**
+ * @file
+ * Installation hooks for pantheon_next module.
+ */
+
+/**
  * Implements hook_install().
  */
-function pantheon_next_install() {
-  //\Drupal::service('pantheon_next.installer')->run();
-}
+// function pantheon_next_install() {
+// Uncomment this to run the installer tasks on install.
+// \Drupal::service('pantheon_next.installer')->run();
+// }

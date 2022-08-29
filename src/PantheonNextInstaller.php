@@ -45,7 +45,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
   protected $keyGeneratorService;
 
   /**
-   * The file system interface.
+   * The file system service.
    *
    * @var \Drupal\Core\File\FileSystemInterface
    */
@@ -62,6 +62,8 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
    *   Calls the core password generator in order to create secret keys.
    * @param \Drupal\simple_oauth\Service\KeyGeneratorService $key_generator_service
    *   Allows us to programmatically generate public and private oauth keys.
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   The file system service.
    */
   public function __construct(ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entity_type_manager, DefaultPasswordGenerator $password_generator, KeyGeneratorService $key_generator_service, FileSystemInterface $file_system) {
     $this->configFactory = $config_factory;
