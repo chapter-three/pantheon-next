@@ -43,12 +43,12 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "collection" = "/admin/config/services/pantheon-next",
- *     "canonical" = "/admin/config/services/pantheon-next/{pantheon_next}",
- *     "delete-form" = "/admin/config/services/pantheon-next/{pantheon_next}/delete",
- *     "edit-form" = "/admin/config/services/pantheon-next/{pantheon_next}/edit",
- *     "add-form" = "/admin/config/services/pantheon-next/new",
- *     "environment" = "/admin/config/services/pantheon-next/{pantheon_next}/environment",
+ *     "collection" = "/admin/config/services/next/pantheon",
+ *     "canonical" = "/admin/config/services/next/pantheon/{pantheon_next}",
+ *     "delete-form" = "/admin/config/services/next/pantheon/{pantheon_next}/delete",
+ *     "edit-form" = "/admin/config/services/next/pantheon/{pantheon_next}/edit",
+ *     "add-form" = "/admin/config/services/next/pantheon/new",
+ *     "environment" = "/admin/config/services/next/pantheon/{pantheon_next}/environment",
  *   }
  * )
  */
