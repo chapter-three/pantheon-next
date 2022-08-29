@@ -1,4 +1,4 @@
 services:
   pantheon_next.installer:
-    class: Drupal\pantheon_next\NextInstaller
+    class: Drupal\pantheon_next\PantheonNextInstaller
     arguments: ['@config.factory', '@entity_type.manager', '@password_generator', '@simple_oauth.key.generator', '@file_system']

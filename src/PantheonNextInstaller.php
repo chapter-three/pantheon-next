@@ -6,16 +6,15 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\simple_oauth\Service\KeyGeneratorService;
 
 /**
- * Next.js installer
+ * Next.js installer.
  *
  * @ingroup pantheon_next
  */
-class NextInstaller {
+class PantheonNextInstaller implements PantheonNextInstallerInterface {
 
   /**
    * The entity type manager.
@@ -54,7 +53,7 @@ class NextInstaller {
 
   /**
    * Constructs the NextInstaller service.
-   * *
+   *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Gets config data.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -72,11 +71,15 @@ class NextInstaller {
     $this->fileSystem = $file_system;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function run() {
     $this->createPathPatterns();
     $user = $this->createUserAndRole();
     $this->createOauthKeys();
     $this->createSiteAndConsumer($user, 'Next.js Site', 'http://localhost:3000/api/preview/', 'http://localhost:3000');
+    $this->setDefaultTheme();
   }
 
   /**
@@ -173,6 +176,7 @@ class NextInstaller {
       $role->save();
     }
 
+    // TODO: Make this configurable.
     $email = 'no-reply@example.com';
     $user_storage = $this->entityTypeManager->getStorage('user');
 
@@ -186,7 +190,7 @@ class NextInstaller {
       $user->setEmail($email);
       $user->setUsername('nextjs');
       $user->set('langcode', 'en');
-      $user->set('init', 'no-reply@example.com');
+      $user->set('init', $email);
       $user->set('preferred_langcode', 'en');
       $user->addRole($role_id);
       $user->enforceIsNew();
@@ -197,29 +201,29 @@ class NextInstaller {
   }
 
   /**
-   * Geenrate SimpleOauth keys.
+   * Generate SimpleOauth keys.
    */
   public function createOauthKeys() {
     $oauth = $this->configFactory->getEditable('simple_oauth.settings');
     if (empty($oauth->get('public_key')) && empty($oauth->get('private_key'))) {
       $path = 'public://oauth-keys';
       // Check if the private file stream wrapper is ready to use.
-      if (\Drupal::service('stream_wrapper_manager')->isValidScheme('private')) {
+      if (\Drupal::service('stream_wrapper_manager')
+        ->isValidScheme('private')) {
         $path = 'private://oauth-keys';
       }
       $this->fileSystem->prepareDirectory($path, FileSystemInterface::CREATE_DIRECTORY);
       $realpath = $this->fileSystem->realpath($path);
 
       $this->keyGeneratorService->generateKeys($realpath);
-      $oauth
-        ->set('public_key', "$realpath/public.key")
+      $oauth->set('public_key', "$realpath/public.key")
         ->set('private_key', "$realpath/private.key")
         ->save();
     }
   }
 
   /**
-   * Configure default content type path aliases.
+   * Create a consumer and set scopes.
    */
   public function createClientScopes($user, $label = 'Pantheon Next.js') {
     $consumer_storage = $this->entityTypeManager->getStorage('consumer');
@@ -246,16 +250,17 @@ class NextInstaller {
     $consumer = $this->createClientScopes($user, $label);
     $next_site = $this->createNextSite($label, $preview_url, $base_url);
     $this->setSiteResolver();
-    $pantheon_next = $this->entityTypeManager->getStorage('pantheon_next')->create([
-      'next_site' => $next_site->id(),
-      'consumer' => $consumer->id()
-    ]);
+    $pantheon_next = $this->entityTypeManager->getStorage('pantheon_next')
+      ->create([
+        'next_site' => $next_site->id(),
+        'consumer' => $consumer->id(),
+      ]);
     $pantheon_next->save();
     return $pantheon_next;
   }
 
   /**
-   * Set NextJS Site resolver configuration.
+   * Create NextEntityTypeConfig entities for content types.
    */
   protected function setSiteResolver() {
     $sites = [];
@@ -265,7 +270,8 @@ class NextInstaller {
       $sites[$site->id()] = $site->id();
     }
 
-    if ($types = $this->entityTypeManager->getStorage('node_type')->loadMultiple()) {
+    if ($types = $this->entityTypeManager->getStorage('node_type')
+      ->loadMultiple()) {
       foreach ($types as $type) {
         $next_entity_type = $this->entityTypeManager->getStorage('next_entity_type_config');
         if ($existing = $next_entity_type->load("node.{$type->id()}")) {
@@ -285,11 +291,18 @@ class NextInstaller {
     }
   }
 
+  protected function setDefaultTheme() {
+    $this->configFactory->getEditable('system.theme')
+      ->set('default', 'claro')
+      ->save();
+  }
+
   /**
    * Generates a machine name from a string.
    */
   protected function getMachineName($string) {
-    $transliterated = \Drupal::transliteration()->transliterate($string, LanguageInterface::LANGCODE_DEFAULT, '_');
+    $transliterated = \Drupal::transliteration()
+      ->transliterate($string, LanguageInterface::LANGCODE_DEFAULT, '_');
     $transliterated = mb_strtolower($transliterated);
     $transliterated = preg_replace('@[^a-z0-9_.]+@', '_', $transliterated);
     return $transliterated;

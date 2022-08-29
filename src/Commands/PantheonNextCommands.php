@@ -4,7 +4,7 @@ namespace Drupal\pantheon_next\Commands;
 
 use Drupal\Core\Url;
 use Drush\Commands\DrushCommands;
-use Drupal\pantheon_next\NextInstaller;
+use Drupal\pantheon_next\PantheonNextInstaller;
 
 /**
  * PantheonNextCommands drush commands.
@@ -14,17 +14,17 @@ class PantheonNextCommands extends DrushCommands {
   /**
    * Pantheon Next installer service.
    *
-   * @var \Drupal\pantheon_next\NextInstaller
+   * @var \Drupal\pantheon_next\PantheonNextInstaller
    */
   protected $pantheonNextInstaller;
 
   /**
    * PantheonNextCommands constructor.
    *
-   * @param \Drupal\pantheon_next\NextInstaller $installer
+   * @param \Drupal\pantheon_next\PantheonNextInstaller $installer
    *   Pantheon Next installer service.
    */
-  public function __construct(NextInstaller $installer) {
+  public function __construct(PantheonNextInstaller $installer) {
     parent::__construct();
     $this->pantheonNextInstaller = $installer;
   }
