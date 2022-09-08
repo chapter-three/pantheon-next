@@ -94,7 +94,6 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
     $user = $this->createUserAndRole();
     $this->createOauthKeys();
     $this->createSiteAndConsumer($user, 'Next.js Site', 'http://localhost:3000/api/preview/', 'http://localhost:3000');
-    $this->setDefaultTheme();
   }
 
   /**
@@ -314,12 +313,6 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
         }
       }
     }
-  }
-
-  protected function setDefaultTheme() {
-    $this->configFactory->getEditable('system.theme')
-      ->set('default', 'claro')
-      ->save();
   }
 
   /**
