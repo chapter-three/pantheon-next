@@ -116,7 +116,7 @@ class PantheonNextListBuilder extends EntityListBuilder {
     // We can only generate secrets if Consumer is specified.
     if ($entity->getConsumer()) {
       $operations['environment'] = [
-        'title' => $this->t('Generate Secret'),
+        'title' => $this->t('Environment Variables'),
         'url' => $this->ensureDestination($entity->toUrl('environment')),
         'attributes' => $ajax_attributes,
       ];
@@ -128,6 +128,7 @@ class PantheonNextListBuilder extends EntityListBuilder {
       $operations['delete']['attributes'] = $ajax_attributes;
       $operations['delete']['weight'] = 999;
     }
+
     return $operations;
   }
 
