@@ -44,11 +44,8 @@ class PantheonNextListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
-    return new static(
-      $entity_type,
-      $container->get('entity_type.manager')->getStorage($entity_type->id()),
-      $container->get('form_builder')
-    );
+    return new static($entity_type, $container->get('entity_type.manager')
+      ->getStorage($entity_type->id()), $container->get('form_builder'));
   }
 
   /**
@@ -73,10 +70,21 @@ class PantheonNextListBuilder extends EntityListBuilder {
       ],
       'query' => \Drupal::destination()->getAsArray(),
     ];
-    $row['site'] = $entity->getNextSite()->toLink($entity->getNextSite()
-      ->label(), 'edit-form', $options);
-    $row['base_url'] = $entity->getNextSite()->getBaseUrl();
-    $row['consumer'] = ($consumer = $entity->getConsumer()) ? $consumer->toLink($consumer->label(), 'edit-form', $options) : $this->t('Error: Not specified');
+
+    $row['site'] = '';
+    $row['base_url'] = '';
+    $row['consumer'] = '';
+
+    if ($next_site = $entity->getNextSite()) {
+      $row['site'] = $next_site->toLink($entity->getNextSite()
+        ->label(), 'edit-form', $options);
+      $row['base_url'] = $next_site->getBaseUrl();
+    }
+
+    if ($consumer = $entity->getConsumer()) {
+      $row['consumer'] = $consumer->toLink($consumer->label(), 'edit-form', $options);
+    }
+
     return $row + parent::buildRow($entity);
   }
 

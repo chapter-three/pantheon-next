@@ -2,8 +2,10 @@
 
 namespace Drupal\pantheon_next\Entity;
 
+use Drupal\consumers\Entity\Consumer;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\next\Entity\NextSiteInterface;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -12,6 +14,22 @@ use Drupal\user\EntityOwnerInterface;
  * @ingroup pantheon_next
  */
 interface PantheonNextInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
+
+  /**
+   * Gets the referenced next site entity.
+   *
+   * @return \Drupal\next\Entity\NextSiteInterface|null
+   *   The referenced next site entity.
+   */
+  public function getNextSite(): ?NextSiteInterface;
+
+  /**
+   * Gets the referenced OAuth consumer.
+   *
+   * @return \Drupal\consumers\Entity\Consumer|null
+   *   Returns the OAuth consumer.
+   */
+  public function getConsumer(): ?Consumer;
 
   /**
    * Gets the PantheonNext creation timestamp.

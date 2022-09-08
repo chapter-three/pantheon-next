@@ -24,6 +24,18 @@ function pantheon_next_entity_delete(EntityInterface $entity) {
       $entity->delete();
     }
   }
+
+  // When a pantheon_next entity is deleted, cascade deletion to the referenced
+  // next_site and consumer entity.
+  /** @var \Drupal\pantheon_next\Entity\PantheonNextInterface $entity */
+  if ($entity->getEntityTypeId() === 'pantheon_next') {
+    if ($next_site = $entity->getNextSite()) {
+      $next_site->delete();
+    }
+    if ($consumer = $entity->getConsumer()) {
+      $consumer->delete();
+    }
+  }
 }
 
 /**

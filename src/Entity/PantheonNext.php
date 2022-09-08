@@ -2,11 +2,13 @@
 
 namespace Drupal\pantheon_next\Entity;
 
+use Drupal\consumers\Entity\Consumer;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\next\Entity\NextSiteInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -111,23 +113,27 @@ class PantheonNext extends ContentEntityBase implements PantheonNextInterface {
   /**
    * Get Next.js site referenced entity.
    */
-  public function getNextSite() {
+  public function getNextSite(): ?NextSiteInterface {
     if (!$this->get('next_site')->isEmpty()) {
       if ($entity = $this->get('next_site')->first()->get('entity')->getTarget()) {
         return $entity->getValue();
       }
     }
+
+    return NULL;
   }
 
   /**
    * Get Consumer referenced entity.
    */
-  public function getConsumer() {
+  public function getConsumer(): ?Consumer {
     if (!$this->get('consumer')->isEmpty()) {
       if ($entity = $this->get('consumer')->first()->get('entity')->getTarget()) {
         return $entity->getValue();
       }
     }
+
+    return NULL;
   }
 
   /**
