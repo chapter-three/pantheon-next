@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        drupal: ["8.9", "9.2", "9.3", "9.4"]
+        drupal: ["9.4"]
     name: Drupal ${{ matrix.drupal }}
     services:
       mysql:
@@ -66,7 +66,7 @@ jobs:
       - name: Run PHPUnit
         run: |
           cd ~/drupal/web
-          ../vendor/bin/phpunit -c core ./
+          ../vendor/bin/phpunit -c core ./modules/pantheon-next
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
