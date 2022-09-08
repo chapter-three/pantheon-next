@@ -53,6 +53,7 @@ jobs:
           composer config repositories.1 composer https://packages.drupal.org/8
           composer config allow-plugins true -n
           COMPOSER_MEMORY_LIMIT=-1 composer require drupal/core-dev:${{ matrix.drupal }} --no-suggest --no-install
+          COMPOSER_MEMORY_LIMIT=-1 composer require drupal/next
           composer install
       - name: Add phpspec/prophecy-phpunit
         run: |
