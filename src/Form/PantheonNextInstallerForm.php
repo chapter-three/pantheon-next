@@ -52,7 +52,7 @@ class PantheonNextInstallerForm extends FormBase {
       '#template' => '
         <h4>Welcome to Next.js for Pantheon</h4>
         <p>This wizard will help you configure Next.js for Pantheon Decoupled.</p>
-        <p>Running the installer will automatically sets everything you need to run a Next.js site:</p>
+        <p>Running the installer will automatically set everything you need to run a Next.js site:</p>
         <ul>
           <li>Create a Next.js site.</li>
           <li>Configure a consumer for authenticating JSON:API requests.</li>
