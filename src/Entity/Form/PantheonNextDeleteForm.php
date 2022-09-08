@@ -23,6 +23,21 @@ class PantheonNextDeleteForm extends ContentEntityDeleteForm {
   /**
    * {@inheritdoc}
    */
+  public function getDescription() {
+    $consumer = $this->getEntity()->getConsumer();
+    if (!$consumer) {
+      return parent::getDescription();
+    }
+
+    return $this->t('<strong>Delete %name will also delete the %consumer consumer</strong>. This action cannot be undone.', [
+      '%name' => $this->getEntity()->label(),
+      '%consumer' => $consumer->label(),
+    ]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getConfirmText() {
     return $this->t('Yes, Delete');
   }
