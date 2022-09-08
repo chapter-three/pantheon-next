@@ -1,0 +1,4 @@
+pantheon_next.env_form:
+  css:
+    theme:
+      css/pantheon_next.env-form.css: {}

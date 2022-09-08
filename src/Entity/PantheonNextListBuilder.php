@@ -110,7 +110,7 @@ class PantheonNextListBuilder extends EntityListBuilder {
     $ajax_attributes = [
       'class' => ['use-ajax'],
       'data-dialog-type' => 'modal',
-      'data-dialog-options' => Json::encode(['width' => 600]),
+      'data-dialog-options' => Json::encode(['width' => 800]),
     ];
 
     // We can only generate secrets if Consumer is specified.

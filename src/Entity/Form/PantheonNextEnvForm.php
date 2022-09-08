@@ -6,7 +6,6 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 
 /**
@@ -38,33 +37,52 @@ class PantheonNextEnvForm extends ContentEntityForm {
 
     $secret = $entity->getNextSite()->getPreviewSecret();
     $variables += [
-      'DRUPAL_PREVIEW_SECRET' => '<span id="drupal-preview-secret">' . $secret . '</span>',
+      'DRUPAL_PREVIEW_SECRET' => $secret,
       'DRUPAL_CLIENT_ID' => $entity->getConsumer()->uuid(),
-      'DRUPAL_CLIENT_SECRET' => '<span id="drupal-client-secret">**************</span>',
+      'DRUPAL_CLIENT_SECRET' => '**************',
     ];
-
-    $form['container'] = [
-      '#title' => $this->t('Environment variables'),
-      '#type' => 'fieldset',
-      '#title_display' => 'invisible',
-    ];
-
-    foreach ($variables as $name => $value) {
-      $form['container'][$name] = [
-        '#type' => 'inline_template',
-        '#template' => '{{ name }}={{ value|raw }}<br/>',
-        '#context' => [
-          'name' => $name,
-          'value' => $value,
-        ],
-      ];
-    }
 
     $form['description'] = [
       '#type' => 'html_tag',
       '#tag' => 'p',
-      '#value' => $this->t('Copy and paste these values in your <em>.env</em> or <em>.env.local</em> files.'),
+      '#value' => $this->t('Copy and paste the following environment variables on your Pantheon site dashboard. You can find the environment variables settings under Settings → Builds.'),
     ];
+    $form['container'] = [
+      '#title' => $this->t('Environment variables'),
+      '#type' => 'fieldset',
+      '#attributes' => ['class' => ['env-container']],
+    ];
+    $form['container']['labels'] = [
+      '#type' => 'inline_template',
+      '#template' => '<div>
+        <div><h4 class="form-item__label">{{name_label}}</h4></div>
+        <div><h4 class="form-item__label">{{value_label}}</h4></div>
+      </div>',
+      '#context' => [
+        'name_label' => $this->t('Name'),
+        'value_label' => $this->t('Value'),
+      ],
+    ];
+
+    foreach ($variables as $name => $value) {
+      $form['container'][$name] = [
+        '#type' => 'container',
+      ];
+      $form['container'][$name]['name'] = [
+        '#type' => 'textfield',
+        '#value' => $name,
+        '#attributes' => ['readonly' => 'readonly'],
+      ];
+      $form['container'][$name]['value'] = [
+        '#type' => 'textfield',
+        '#value' => $value,
+        '#attributes' => [
+          'readonly' => 'readonly',
+          'class' => ['value-' . $name],
+        ],
+      ];
+    }
+
     $form['confirm'] = [
       '#type' => 'checkbox',
       '#default_value' => TRUE,
@@ -85,6 +103,9 @@ class PantheonNextEnvForm extends ContentEntityForm {
       '#weight' => 5,
     ];
     $form['actions']['#weight'] = 999;
+
+    $form['#attached']['library'][] = 'pantheon_next/pantheon_next.env_form';
+
     return $form;
   }
 
@@ -103,8 +124,8 @@ class PantheonNextEnvForm extends ContentEntityForm {
       $consumer = $this->entity->getConsumer();
       $consumer->set('secret', $client_secret);
       $consumer->save();
-      $response->addCommand(new InvokeCommand("#drupal-preview-secret", 'html', [$preview_secret]));
-      $response->addCommand(new InvokeCommand("#drupal-client-secret", 'html', [$client_secret]));
+      $response->addCommand(new InvokeCommand(".value-DRUPAL_PREVIEW_SECRET", 'val', [$preview_secret]));
+      $response->addCommand(new InvokeCommand(".value-DRUPAL_CLIENT_SECRET", 'val', [$client_secret]));
     }
     return $response;
   }
