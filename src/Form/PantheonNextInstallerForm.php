@@ -56,7 +56,7 @@ class PantheonNextInstallerForm extends FormBase {
         <ul>
           <li>Create a Next.js site.</li>
           <li>Configure a consumer for authenticating JSON:API requests.</li>
-          <li>Configure decoupled preview for the following content types: Article, Recipe and Basic Page.</li>
+          <li>Configure decoupled preview for content types.</li>
         </ul>',
     ];
 
