@@ -9,6 +9,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\simple_oauth\Service\KeyGeneratorService;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
 
 /**
  * Next.js installer.
@@ -151,7 +153,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
   /**
    * Configure default content type path aliases.
    */
-  public function createNextSite($label = 'Next.js Site', $preview_url = '/api/preview/', $base_url = '') {
+  public function createNextSite($label = 'Next.js', $preview_url = '/api/preview', $base_url = '') {
     $site_id = $this->getMachineName($label);
     $site_storage = $this->entityTypeManager->getStorage('next_site');
     if (!$next_site = $site_storage->load($site_id)) {
@@ -173,39 +175,46 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
    * Configure default content type path aliases.
    */
   public function createUserAndRole() {
-    $role_id = 'next_site';
+    $role_id = 'next_js';
     $role_storage = $this->entityTypeManager->getStorage('user_role');
+
+    // Create the Next.js role.
     if (!$role = $role_storage->load($role_id)) {
       /** @var \Drupal\user\RoleInterface $role */
       $role = $role_storage->create([
         'id' => $role_id,
-        'label' => 'Next.js Site',
+        'label' => 'Next.js',
       ]);
 
       $role->grantPermission('bypass node access');
       $role->grantPermission('issue subrequests');
       $role->grantPermission('access user profiles');
-
       $role->save();
     }
 
+    // Create the Next.js user.
     // TODO: Make this configurable.
     $email = $this->uuid->generate() . "@" . $this->uuid->generate() . ".com";
+    $username = 'Next.js';
     $user_storage = $this->entityTypeManager->getStorage('user');
-
-    $users = $user_storage->loadByProperties(['mail' => $email]);
+    $users = $user_storage->loadByProperties(['name' => $username]);
     if ($user = reset($users)) {
       return $user;
     }
     else {
+      /** @var \Drupal\user\UserInterface $user */
       $user = $user_storage->create([]);
       $user->setPassword($this->defaultPasswordGenerator->generate(21));
       $user->setEmail($email);
-      $user->setUsername('nextjs');
+      $user->setUsername($username);
       $user->set('langcode', 'en');
       $user->set('init', $email);
       $user->set('preferred_langcode', 'en');
-      $user->addRole($role_id);
+
+      // As of Next 1.3, we need to assign all roles for scopes.
+      foreach ($this->getUserRoles() as $role_id) {
+        $user->addRole($role_id);
+      }
       $user->enforceIsNew();
       $user->activate();
       $user->save();
@@ -238,7 +247,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
   /**
    * Create a consumer and set scopes.
    */
-  public function createClientScopes($user, $label = 'Pantheon Next.js') {
+  public function createClientScopes($user, $label = 'Next.js') {
     $consumer_storage = $this->entityTypeManager->getStorage('consumer');
     $consumer_entities = $consumer_storage->loadByProperties(['label' => $label]);
     $all_consumer_entities = $consumer_storage->loadMultiple();
@@ -258,7 +267,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
   /**
    * Create new Pantheon Next.js site entity.
    */
-  public function createSiteAndConsumer($user, $label = 'Pantheon Next.js Site', $preview_url = 'http://localhost:3000/api/preview/', $base_url = 'http://localhost:3000') {
+  public function createSiteAndConsumer($user, $label = 'Next.js', $preview_url = 'http://localhost:3000/api/preview', $base_url = 'http://localhost:3000') {
     $label = preg_replace("#[[:punct:]]#", "", $label);
     $consumer = $this->createClientScopes($user, $label);
     $next_site = $this->createNextSite($label, $preview_url, $base_url);
@@ -319,6 +328,22 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
     $transliterated = mb_strtolower($transliterated);
     $transliterated = preg_replace('@[^a-z0-9_.]+@', '_', $transliterated);
     return $transliterated;
+  }
+
+  /**
+   * Returns an array of roles IDs available on the site.
+   *
+   * @return array
+   *   An array of role ids.
+   */
+  protected function getUserRoles() {
+    return $this->entityTypeManager->getStorage('user_role')
+      ->getQuery()
+      ->condition('id', [
+        RoleInterface::AUTHENTICATED_ID,
+        Role::ANONYMOUS_ID,
+      ], 'NOT IN')
+      ->execute();
   }
 
 }
