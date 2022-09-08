@@ -1,4 +1,4 @@
-# ⚡️ Next.js for Pantheon Decoupled
+# Next.js for Drupal on Pantheon
 
 [![Drupal](https://github.com/chapter-three/pantheon-next/actions/workflows/drupal.yml/badge.svg)](https://github.com/chapter-three/pantheon-next/actions/workflows/drupal.yml)
 
