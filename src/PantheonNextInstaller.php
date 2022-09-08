@@ -259,7 +259,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
       $consumer->set('secret', $this->defaultPasswordGenerator->generate(21));
       $consumer->set('is_default', empty($all_consumer_entities) ?? TRUE);
       $consumer->set('redirect', '');
-      $consumer->set('roles', 'next_site');
+      $consumer->set('roles', 'next_js');
       $consumer->set('user_id', $user->id());
       $consumer->save();
     }
