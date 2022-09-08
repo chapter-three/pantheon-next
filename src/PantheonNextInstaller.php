@@ -106,7 +106,7 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
         'label' => 'Article',
         'pattern' => '/articles/[node:title]',
       ],
-      'recipes' => [
+      'recipe' => [
         'label' => 'Recipe',
         'pattern' => '/recipes/[node:title]',
       ],
@@ -118,34 +118,37 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
 
     $storage = $this->entityTypeManager->getStorage('pathauto_pattern');
     foreach ($patterns as $bundle => $params) {
-      // Checking if patterns exists
-      $exists = $storage->getQuery()
-        ->condition('selection_criteria.*.id', 'entity_bundle:node')
-        ->condition('selection_criteria.*.bundles.' . $bundle, $bundle)
-        ->accessCheck(FALSE)
-        ->execute();
-      if (empty($exists)) {
-        $uuid = \Drupal::service('uuid')->generate();
-        $pattern = $storage->create([
-          'id' => $bundle,
-          'label' => $params['label'],
-          'type' => 'canonical_entities:node',
-          'pattern' => $params['pattern'],
-          'selection_criteria' => [
-            $uuid => [
-              'uuid' => $uuid,
-              'id' => 'entity_bundle:node',
-              'negate' => FALSE,
-              'context_mapping' => [
-                'node' => 'node',
-              ],
-              'bundles' => [
-                $bundle => $bundle,
+      // Check if the entity type exists.
+      if ($this->entityTypeManager->getStorage('node_type')->load($bundle)) {
+        // Checking if patterns exists
+        $exists = $storage->getQuery()
+          ->condition('selection_criteria.*.id', 'entity_bundle:node')
+          ->condition('selection_criteria.*.bundles.' . $bundle, $bundle)
+          ->accessCheck(FALSE)
+          ->execute();
+        if (empty($exists)) {
+          $uuid = \Drupal::service('uuid')->generate();
+          $pattern = $storage->create([
+            'id' => $bundle,
+            'label' => $params['label'],
+            'type' => 'canonical_entities:node',
+            'pattern' => $params['pattern'],
+            'selection_criteria' => [
+              $uuid => [
+                'uuid' => $uuid,
+                'id' => 'entity_bundle:node',
+                'negate' => FALSE,
+                'context_mapping' => [
+                  'node' => 'node',
+                ],
+                'bundles' => [
+                  $bundle => $bundle,
+                ],
               ],
             ],
-          ],
-        ]);
-        $pattern->save();
+          ]);
+          $pattern->save();
+        }
       }
     }
   }
