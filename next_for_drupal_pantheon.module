@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Hooks implementation for pantheon_next module.
+ * Hooks implementation for next_for_drupal_pantheon module.
  */
 
 use Drupal\Core\Entity\EntityInterface;
@@ -10,8 +10,8 @@ use Drupal\Core\Entity\EntityInterface;
 /**
  * Implements hook_entity_delete().
  */
-function pantheon_next_entity_delete(EntityInterface $entity) {
-  $storage = \Drupal::entityTypeManager()->getStorage('pantheon_next');
+function next_for_drupal_pantheon_entity_delete(EntityInterface $entity) {
+  $storage = \Drupal::entityTypeManager()->getStorage('next_for_drupal_pantheon');
   if ($entity->getEntityTypeId() == 'next_site') {
     $entities = $storage->loadByProperties(['next_site' => $entity->id()]);
     foreach ($entities as $entity) {
@@ -25,10 +25,10 @@ function pantheon_next_entity_delete(EntityInterface $entity) {
     }
   }
 
-  // When a pantheon_next entity is deleted, cascade deletion to the referenced
+  // When a next_for_drupal_pantheon entity is deleted, cascade deletion to the referenced
   // next_site and consumer entity.
-  /** @var \Drupal\pantheon_next\Entity\PantheonNextInterface $entity */
-  if ($entity->getEntityTypeId() === 'pantheon_next') {
+  /** @var \Drupal\next_for_drupal_pantheon\Entity\PantheonNextInterface $entity */
+  if ($entity->getEntityTypeId() === 'next_for_drupal_pantheon') {
     if ($next_site = $entity->getNextSite()) {
       $next_site->delete();
     }

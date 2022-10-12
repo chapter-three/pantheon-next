@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity;
+namespace Drupal\next_for_drupal_pantheon\Entity;
 
 use Drupal\consumers\Entity\Consumer;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -14,27 +14,27 @@ use Drupal\user\UserInterface;
 /**
  * Defines the PantheonNext entity.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  *
  * @ContentEntityType(
- *   id = "pantheon_next",
+ *   id = "next_for_drupal_pantheon",
  *   label = @Translation("Pantheon Next.js Site"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\pantheon_next\Entity\PantheonNextListBuilder",
- *     "access" = "Drupal\pantheon_next\Entity\PantheonNextAccessControlHandler",
+ *     "list_builder" = "Drupal\next_for_drupal_pantheon\Entity\PantheonNextListBuilder",
+ *     "access" = "Drupal\next_for_drupal_pantheon\Entity\PantheonNextAccessControlHandler",
  *     "route_provider" = {
- *       "html" = "Drupal\pantheon_next\Routing\PantheonNextHtmlRouteProvider",
+ *       "html" = "Drupal\next_for_drupal_pantheon\Routing\PantheonNextHtmlRouteProvider",
  *     },
- *     "access" = "Drupal\pantheon_next\Entity\PantheonNextAccessControlHandler",
+ *     "access" = "Drupal\next_for_drupal_pantheon\Entity\PantheonNextAccessControlHandler",
  *     "form" = {
- *       "delete" = "Drupal\pantheon_next\Entity\Form\PantheonNextDeleteForm",
- *       "edit" = "Drupal\pantheon_next\Entity\Form\PantheonNextEditForm",
- *       "add" = "Drupal\pantheon_next\Entity\Form\PantheonNextEditForm",
- *       "environment" = "Drupal\pantheon_next\Entity\Form\PantheonNextEnvForm",
+ *       "delete" = "Drupal\next_for_drupal_pantheon\Entity\Form\PantheonNextDeleteForm",
+ *       "edit" = "Drupal\next_for_drupal_pantheon\Entity\Form\PantheonNextEditForm",
+ *       "add" = "Drupal\next_for_drupal_pantheon\Entity\Form\PantheonNextEditForm",
+ *       "environment" = "Drupal\next_for_drupal_pantheon\Entity\Form\PantheonNextEnvForm",
  *     },
  *   },
- *   base_table = "pantheon_next",
+ *   base_table = "next_for_drupal_pantheon",
  *   admin_permission = "administer site configuration",
  *   entity_keys = {
  *     "id" = "id",
@@ -46,11 +46,11 @@ use Drupal\user\UserInterface;
  *   },
  *   links = {
  *     "collection" = "/admin/config/services/next/pantheon",
- *     "canonical" = "/admin/config/services/next/pantheon/{pantheon_next}",
- *     "delete-form" = "/admin/config/services/next/pantheon/{pantheon_next}/delete",
- *     "edit-form" = "/admin/config/services/next/pantheon/{pantheon_next}/edit",
+ *     "canonical" = "/admin/config/services/next/pantheon/{next_for_drupal_pantheon}",
+ *     "delete-form" = "/admin/config/services/next/pantheon/{next_for_drupal_pantheon}/delete",
+ *     "edit-form" = "/admin/config/services/next/pantheon/{next_for_drupal_pantheon}/edit",
  *     "add-form" = "/admin/config/services/next/pantheon/new",
- *     "environment" = "/admin/config/services/next/pantheon/{pantheon_next}/environment",
+ *     "environment" = "/admin/config/services/next/pantheon/{next_for_drupal_pantheon}/environment",
  *   }
  * )
  */

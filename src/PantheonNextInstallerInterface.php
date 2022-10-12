@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next;
+namespace Drupal\next_for_drupal_pantheon;
 
 /**
  * Interface for the pantheon next installer.

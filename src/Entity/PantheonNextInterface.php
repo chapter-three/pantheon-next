@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity;
+namespace Drupal\next_for_drupal_pantheon\Entity;
 
 use Drupal\consumers\Entity\Consumer;
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -11,7 +11,7 @@ use Drupal\user\EntityOwnerInterface;
 /**
  * Provides an interface for defining PantheonNext entities.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 interface PantheonNextInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
@@ -45,7 +45,7 @@ interface PantheonNextInterface extends ContentEntityInterface, EntityChangedInt
    * @param int $timestamp
    *   The PantheonNext creation timestamp.
    *
-   * @return \Drupal\pantheon_next\Entity\PantheonNextInterface
+   * @return \Drupal\next_for_drupal_pantheon\Entity\PantheonNextInterface
    *   The called PantheonNext entity.
    */
   public function setCreatedTime($timestamp);

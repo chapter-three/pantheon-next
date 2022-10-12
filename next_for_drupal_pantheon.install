@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Installation hooks for next_for_drupal_pantheon module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+// function next_for_drupal_pantheon_install() {
+// Uncomment this to run the installer tasks on install.
+// \Drupal::service('next_for_drupal_pantheon.installer')->run();
+// }

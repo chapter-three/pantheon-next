@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity;
+namespace Drupal\next_for_drupal_pantheon\Entity;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
@@ -8,13 +8,13 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Component\Serialization\Json;
-use Drupal\pantheon_next\Form\PantheonNextInstallerForm;
+use Drupal\next_for_drupal_pantheon\Form\PantheonNextInstallerForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a base class to build a listing entities.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextListBuilder extends EntityListBuilder {
 

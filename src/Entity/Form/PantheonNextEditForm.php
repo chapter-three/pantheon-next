@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity\Form;
+namespace Drupal\next_for_drupal_pantheon\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -9,7 +9,7 @@ use Drupal\Core\Url;
 /**
  * PantheonNextEditForm controller.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextEditForm extends ContentEntityForm {
 
@@ -17,7 +17,7 @@ class PantheonNextEditForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return 'entity.pantheon_next.collection';
+    return 'entity.next_for_drupal_pantheon.collection';
   }
 
   /**
@@ -67,7 +67,7 @@ class PantheonNextEditForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
     if ($entity->isNew()) {
-      $installer = \Drupal::service('pantheon_next.installer');
+      $installer = \Drupal::service('next_for_drupal_pantheon.installer');
       $user = $installer->createUserAndRole();
       $entity->set('consumer', $installer->createClientScopes($user, $form_state->getValue('site_name')));
       $entity->set('next_site', $installer->createNextSite($form_state->getValue('site_name'), $form_state->getValue('preview_url'), $form_state->getValue('base_url')));

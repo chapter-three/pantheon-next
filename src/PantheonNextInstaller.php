@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next;
+namespace Drupal\next_for_drupal_pantheon;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -15,7 +15,7 @@ use Drupal\user\RoleInterface;
 /**
  * Next.js installer.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextInstaller implements PantheonNextInstallerInterface {
 
@@ -274,13 +274,13 @@ class PantheonNextInstaller implements PantheonNextInstallerInterface {
     $consumer = $this->createClientScopes($user, $label);
     $next_site = $this->createNextSite($label, $preview_url, $base_url);
     $this->setSiteResolver();
-    $pantheon_next = $this->entityTypeManager->getStorage('pantheon_next')
+    $next_for_drupal_pantheon = $this->entityTypeManager->getStorage('next_for_drupal_pantheon')
       ->create([
         'next_site' => $next_site->id(),
         'consumer' => $consumer->id(),
       ]);
-    $pantheon_next->save();
-    return $pantheon_next;
+    $next_for_drupal_pantheon->save();
+    return $next_for_drupal_pantheon;
   }
 
   /**

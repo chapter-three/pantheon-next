@@ -1,5 +1,5 @@
-entity.pantheon_next.collection:
+entity.next_for_drupal_pantheon.collection:
   title: "Pantheon"
   description: "Configure Next.js sites for Pantheon Decoupled."
   parent: next.next_site.collection
-  route_name: entity.pantheon_next.collection
+  route_name: entity.next_for_drupal_pantheon.collection

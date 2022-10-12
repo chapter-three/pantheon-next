@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity\Form;
+namespace Drupal\next_for_drupal_pantheon\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityDeleteForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Form controller for PantheonNext delete form.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextDeleteForm extends ContentEntityDeleteForm {
 

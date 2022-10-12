@@ -1,10 +1,10 @@
 <?php
 
-namespace Drupal\pantheon_next\Commands;
+namespace Drupal\next_for_drupal_pantheon\Commands;
 
 use Drupal\Core\Url;
 use Drush\Commands\DrushCommands;
-use Drupal\pantheon_next\PantheonNextInstaller;
+use Drupal\next_for_drupal_pantheon\PantheonNextInstaller;
 
 /**
  * PantheonNextCommands drush commands.
@@ -14,14 +14,14 @@ class PantheonNextCommands extends DrushCommands {
   /**
    * Pantheon Next installer service.
    *
-   * @var \Drupal\pantheon_next\PantheonNextInstaller
+   * @var \Drupal\next_for_drupal_pantheon\PantheonNextInstaller
    */
   protected $pantheonNextInstaller;
 
   /**
    * PantheonNextCommands constructor.
    *
-   * @param \Drupal\pantheon_next\PantheonNextInstaller $installer
+   * @param \Drupal\next_for_drupal_pantheon\PantheonNextInstaller $installer
    *   Pantheon Next installer service.
    */
   public function __construct(PantheonNextInstaller $installer) {
@@ -52,10 +52,10 @@ class PantheonNextCommands extends DrushCommands {
     'base_url' => 'https://example.com',
   ]) {
     $user = $this->pantheonNextInstaller->createUserAndRole();
-    $pantheon_next = $this->pantheonNextInstaller->createSiteAndConsumer($user, $label, $options['preview_url'], $options['base_url']);
-    if ($pantheon_next) {
+    $next_for_drupal_pantheon = $this->pantheonNextInstaller->createSiteAndConsumer($user, $label, $options['preview_url'], $options['base_url']);
+    if ($next_for_drupal_pantheon) {
       $this->output()
-        ->writeln($label . ' sucessfully created. Go to ' . URL::fromRoute('entity.pantheon_next.collection')
+        ->writeln($label . ' sucessfully created. Go to ' . URL::fromRoute('entity.next_for_drupal_pantheon.collection')
           ->setAbsolute()
           ->toString() . ' to genereate secret keys.');
     }

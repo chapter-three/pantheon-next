@@ -1,46 +1,46 @@
 <?php
 
-namespace Drupal\pantheon_next\Form;
+namespace Drupal\next_for_drupal_pantheon\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\pantheon_next\PantheonNextInstallerInterface;
+use Drupal\next_for_drupal_pantheon\PantheonNextInstallerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Declares a form for running the pantheon_next installer.
+ * Declares a form for running the next_for_drupal_pantheon installer.
  */
 class PantheonNextInstallerForm extends FormBase {
 
   /**
-   * The pantheon_next installer service.
+   * The next_for_drupal_pantheon installer service.
    *
-   * @var \Drupal\pantheon_next\PantheonNextInstallerInterface
+   * @var \Drupal\next_for_drupal_pantheon\PantheonNextInstallerInterface
    */
   protected PantheonNextInstallerInterface $pantheonNextInstaller;
 
   /**
    * Constructs the PantheonNextInstallerForm form.
    *
-   * @param \Drupal\pantheon_next\PantheonNextInstallerInterface $pantheon_next_installer
-   *   The pantheon_next installer service.
+   * @param \Drupal\next_for_drupal_pantheon\PantheonNextInstallerInterface $next_for_drupal_pantheon_installer
+   *   The next_for_drupal_pantheon installer service.
    */
-  public function __construct(PantheonNextInstallerInterface $pantheon_next_installer) {
-    $this->pantheonNextInstaller = $pantheon_next_installer;
+  public function __construct(PantheonNextInstallerInterface $next_for_drupal_pantheon_installer) {
+    $this->pantheonNextInstaller = $next_for_drupal_pantheon_installer;
   }
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('pantheon_next.installer'));
+    return new static($container->get('next_for_drupal_pantheon.installer'));
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'pantheon_next_installer_form';
+    return 'next_for_drupal_pantheon_installer_form';
   }
 
   /**

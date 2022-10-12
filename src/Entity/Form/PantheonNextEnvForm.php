@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity\Form;
+namespace Drupal\next_for_drupal_pantheon\Entity\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,7 +11,7 @@ use Drupal\Core\Ajax\InvokeCommand;
 /**
  * PantheonNextEnvForm controller.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextEnvForm extends ContentEntityForm {
 
@@ -19,7 +19,7 @@ class PantheonNextEnvForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return 'entity.pantheon_next.collection';
+    return 'entity.next_for_drupal_pantheon.collection';
   }
 
   /**
@@ -104,7 +104,7 @@ class PantheonNextEnvForm extends ContentEntityForm {
     ];
     $form['actions']['#weight'] = 999;
 
-    $form['#attached']['library'][] = 'pantheon_next/pantheon_next.env_form';
+    $form['#attached']['library'][] = 'next_for_drupal_pantheon/next_for_drupal_pantheon.env_form';
 
     return $form;
   }

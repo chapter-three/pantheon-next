@@ -1,8 +1,8 @@
-entity.pantheon_next.add_form:
-  route_name: entity.pantheon_next.add_form
+entity.next_for_drupal_pantheon.add_form:
+  route_name: entity.next_for_drupal_pantheon.add_form
   title: "New Next.js Site"
   appears_on:
-    - entity.pantheon_next.collection
+    - entity.next_for_drupal_pantheon.collection
   options:
     attributes:
       class:

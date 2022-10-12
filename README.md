@@ -6,10 +6,10 @@ This module provides integration for developing decoupled Drupal and Next.js sit
 
 ## Installation
 
-1. Add the `pantheon_next` module to your Drupal site.
+1. Add the `next_for_drupal_pantheon` module to your Drupal site.
 
 ```bash
-composer require drupal/pantheon_next
+composer require drupal/next_for_drupal_pantheon
 ```
 
 2. Visit `/admin/modules` and enable the **Next.js for Pantheon** module.

@@ -1,8 +1,8 @@
 {
-  "name": "chapter-three/pantheon_next",
+  "name": "drupal/next_for_drupal_pantheon",
   "description": "This module provides a starting point for developing a decoupled Drupal + Next.js site on Pantheon.",
   "type": "drupal-module",
-  "homepage": "https://drupal.org/project/pantheon_next",
+  "homepage": "https://drupal.org/project/next_for_drupal_pantheon",
   "license": "GPL-2.0-or-later",
   "require": {
     "drupal/next": "^1.2"

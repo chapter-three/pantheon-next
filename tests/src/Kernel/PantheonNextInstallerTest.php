@@ -1,18 +1,18 @@
 <?php
 
-namespace Drupal\Tests\pantheon_next\Kernel;
+namespace Drupal\Tests\next_for_drupal_pantheon\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\pantheon_next\PantheonNextInstallerInterface;
+use Drupal\next_for_drupal_pantheon\PantheonNextInstallerInterface;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\user\Entity\Role;
 
 /**
- * Tests the pantheon_next.installer service.
+ * Tests the next_for_drupal_pantheon.installer service.
  *
- * @coversDefaultClass \Drupal\pantheon_next\PantheonNextInstaller
+ * @coversDefaultClass \Drupal\next_for_drupal_pantheon\PantheonNextInstaller
  *
- * @group pantheon_next
+ * @group next_for_drupal_pantheon
  */
 class PantheonNextInstallerTest extends KernelTestBase {
 
@@ -28,7 +28,7 @@ class PantheonNextInstallerTest extends KernelTestBase {
     'field',
     'file',
     'consumers',
-    'pantheon_next',
+    'next_for_drupal_pantheon',
     'node',
     'simple_oauth',
     'serialization',
@@ -44,7 +44,7 @@ class PantheonNextInstallerTest extends KernelTestBase {
   /**
    * The pantheon next installer.
    *
-   * @var \Drupal\pantheon_next\PantheonNextInstallerInterface
+   * @var \Drupal\next_for_drupal_pantheon\PantheonNextInstallerInterface
    */
   protected PantheonNextInstallerInterface $pantheonNextInstaller;
 
@@ -57,7 +57,7 @@ class PantheonNextInstallerTest extends KernelTestBase {
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installEntitySchema('consumer');
-    $this->installEntitySchema('pantheon_next');
+    $this->installEntitySchema('next_for_drupal_pantheon');
     $this->installEntitySchema('pathauto_pattern');
     $this->installConfig(['field', 'file', 'filter', 'image', 'node', 'system']);
     $this->installSchema('system', ['sequences']);
@@ -67,7 +67,7 @@ class PantheonNextInstallerTest extends KernelTestBase {
     $this->createContentType(['type' => 'page']);
     $this->createContentType(['type' => 'other']);
 
-    $this->pantheonNextInstaller = $this->container->get('pantheon_next.installer');
+    $this->pantheonNextInstaller = $this->container->get('next_for_drupal_pantheon.installer');
   }
 
   /**
@@ -106,15 +106,15 @@ class PantheonNextInstallerTest extends KernelTestBase {
     $this->assertNotNull($next_site);
     $this->assertCount(1, $consumers);
 
-    // Check pantheon_next entity.
-    /** @var \Drupal\pantheon_next\Entity\PantheonNextInterface $pantheon_next */
-    $pantheon_next = $entity_type_manager->getStorage('pantheon_next')->load(1);
-    $this->assertSame($pantheon_next->getNextSite()->id(), $next_site->id());
+    // Check next_for_drupal_pantheon entity.
+    /** @var \Drupal\next_for_drupal_pantheon\Entity\PantheonNextInterface $next_for_drupal_pantheon */
+    $next_for_drupal_pantheon = $entity_type_manager->getStorage('next_for_drupal_pantheon')->load(1);
+    $this->assertSame($next_for_drupal_pantheon->getNextSite()->id(), $next_site->id());
     $consumer = reset($consumers);
-    $this->assertSame($pantheon_next->getConsumer()->id(), $consumer->id());
+    $this->assertSame($next_for_drupal_pantheon->getConsumer()->id(), $consumer->id());
 
-    // Ensure only 1 pantheon_next entity is created.
-    $this->assertCount(1, $entity_type_manager->getStorage('pantheon_next')->loadMultiple());
+    // Ensure only 1 next_for_drupal_pantheon entity is created.
+    $this->assertCount(1, $entity_type_manager->getStorage('next_for_drupal_pantheon')->loadMultiple());
   }
 
   /**

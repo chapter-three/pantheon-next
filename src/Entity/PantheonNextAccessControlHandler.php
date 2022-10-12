@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Entity;
+namespace Drupal\next_for_drupal_pantheon\Entity;
 
 use Drupal\Core\Entity\EntityAccessControlHandler;
 use Drupal\Core\Entity\EntityInterface;
@@ -8,9 +8,9 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 
 /**
- * Access controller for the pantheon_next entity.
+ * Access controller for the next_for_drupal_pantheon entity.
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextAccessControlHandler extends EntityAccessControlHandler {
 

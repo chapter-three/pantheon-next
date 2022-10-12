@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pantheon_next\Routing;
+namespace Drupal\next_for_drupal_pantheon\Routing;
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Route;
  * @see \Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see \Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
  *
- * @ingroup pantheon_next
+ * @ingroup next_for_drupal_pantheon
  */
 class PantheonNextHtmlRouteProvider extends AdminHtmlRouteProvider {
 
@@ -22,7 +22,7 @@ class PantheonNextHtmlRouteProvider extends AdminHtmlRouteProvider {
   public function getRoutes(EntityTypeInterface $entity_type) {
     $collection = parent::getRoutes($entity_type);
     if ($environment = $this->getEnvironmentVariablesRoute($entity_type)) {
-      $collection->add("entity.pantheon_next.environment", $environment);
+      $collection->add("entity.next_for_drupal_pantheon.environment", $environment);
     }
     return $collection;
   }
@@ -56,13 +56,13 @@ class PantheonNextHtmlRouteProvider extends AdminHtmlRouteProvider {
     }
 
     $route = new Route($entity_type->getLinkTemplate('environment'));
-    $route->setDefault('_entity_form', 'pantheon_next.environment');
+    $route->setDefault('_entity_form', 'next_for_drupal_pantheon.environment');
     $route->setDefault('_title', 'Environment Variables');
     $route->setRequirement('_permission', $entity_type->getAdminPermission());
     $route->setOption('_admin_route', TRUE);
     $route->setOption('parameters', [
-      'pantheon_next' => [
-        'type' => 'entity:pantheon_next',
+      'next_for_drupal_pantheon' => [
+        'type' => 'entity:next_for_drupal_pantheon',
       ],
     ]);
 
